@@ -16,6 +16,7 @@ export const useUserStore = defineStore({
     code: storageSession().getItem<DataInfo<number>>(sessionKey)?.code ?? '',
     // 页面级别权限
     roles: storageSession().getItem<DataInfo<number>>(sessionKey)?.roles ?? []
+    // 用户信息
   }),
   actions: {
     /** 存储用户名 */
@@ -33,7 +34,7 @@ export const useUserStore = defineStore({
           .then(data => {
             if (data) {
               localStorage.setItem('token', data.token)
-              setToken(data.data)
+              setToken(data)
               resolve(data)
             }
           })

@@ -9,8 +9,22 @@ export interface DataInfo<T> {
   expires: T
   /** 用于调用刷新accessToken的接口时所需的token */
   refreshToken: string
-  /** 用户名 */
-  code?: string
+  /** 用户信息 */
+  data: {
+    id: number
+    code: string
+    name: string
+    age?: any
+    gender: number
+    address: string
+    deptId: number
+    deptName: string
+    avatar: string
+    birthday: string
+    phone: string
+    remark: string
+    status: number
+  }
   /** 当前登陆用户的角色 */
   roles?: Array<string>
 }
@@ -32,7 +46,9 @@ export function getToken(): DataInfo<number> {
  */
 export function setToken(data: DataInfo<Date>) {
   let expires = 0
-  const { token, refreshToken } = data
+  const { token } = data
+  const user = data.data
+  console.log(user)
   expires = new Date(data.expires).getTime() // 如果后端直接设置时间戳，将此处代码改为expires = data.expires，然后把上面的DataInfo<Date>改成DataInfo<number>即可
   const cookieString = JSON.stringify({ token, expires })
 
@@ -45,12 +61,7 @@ export function setToken(data: DataInfo<Date>) {
   function setSessionKey(code: string, roles: Array<string>) {
     useUserStoreHook().SET_USERNAME(code)
     useUserStoreHook().SET_ROLES(roles)
-    storageSession().setItem(sessionKey, {
-      refreshToken,
-      expires,
-      code,
-      roles
-    })
+    storageSession().setItem(sessionKey, user)
   }
 
   if (data.code && data.roles) {

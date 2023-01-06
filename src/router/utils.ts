@@ -27,7 +27,7 @@ const IFrame = () => import("@/layout/frameView.vue");
 const modulesRoutes = import.meta.glob("/src/views/**/*.{vue,tsx}");
 
 // 动态路由
-import { getAsyncRoutes } from "@/api/routes";
+import { getAsyncRouters, getAsyncRoutes } from "@/api/routes";
 
 function handRank(routeInfo: any) {
   const { name, path, parentId, meta } = routeInfo;
@@ -204,7 +204,11 @@ function initRouter() {
       });
     } else {
       return new Promise(resolve => {
-        getAsyncRoutes().then(({ data }) => {
+				getAsyncRoutes().then(({ data }) => {
+					getAsyncRouters().then(({ data }) => {
+						console.log(data);
+					})
+					console.log(data);
           handleAsyncRoutes(cloneDeep(data));
           storageSession().setItem(key, data);
           resolve(router);
@@ -213,10 +217,18 @@ function initRouter() {
     }
   } else {
     return new Promise(resolve => {
-      getAsyncRoutes().then(({ data }) => {
-        handleAsyncRoutes(cloneDeep(data));
-        resolve(router);
-      });
+			getAsyncRoutes().then(({ data }) => {
+					// data.forEach(item => {
+          //     item.meta = { title: item.remark }
+          //     item.children.forEach(i => {
+          //       i.meta = { title: i.remark }
+          //     })
+          //   })
+							
+            console.log(data)
+        handleAsyncRoutes(cloneDeep(data))
+        resolve(router)
+      })
     });
   }
 }

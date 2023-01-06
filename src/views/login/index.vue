@@ -12,7 +12,7 @@ import { bg, avatar, illustration } from './utils/static'
 import { useRenderIcon } from '@/components/ReIcon/src/hooks'
 import { ref, reactive, toRaw, onMounted, onBeforeUnmount } from 'vue'
 import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange'
-
+import { getAllMenu } from '@/api/routes'
 import dayIcon from '@/assets/svg/day.svg?component'
 import darkIcon from '@/assets/svg/dark.svg?component'
 import Lock from '@iconify-icons/ri/lock-fill'
@@ -45,7 +45,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
       useUserStoreHook()
         .loginByUsername({ code: ruleForm.code, password: ruleForm.password })
         .then(res => {
-          if (res.code ===200) {
+          if (res.code === 200) {
             // 获取后端路由
             initRouter().then(() => {
               router.push('/')
