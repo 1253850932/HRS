@@ -130,3 +130,11 @@ pnpm remove 包名
 ├── tsconfig.json  # typescript 配置
 └── vite.config.ts  # vite 配置
 ```
+
+## 数组循环只得到最后一个数据
+
+``` js
+    tradeType.map((item, index) => {    //tradeType是要遍历的数组
+      arr.push(Object.assign({}, obj, { tradeType: item }));//arr是新数组,最后的参数是要取的遍历数组内的值，将tradType放到obj里，值是外层数组每次遍历出来的值
+     });
+``` 		 

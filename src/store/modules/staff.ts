@@ -1,10 +1,9 @@
-import { resetRouter } from '@/router'
 import { store } from '@/store'
 import { defineStore } from 'pinia'
 
 export const useAppStore = defineStore({
   id: 'staff',
-  state: (): appType => ({}),
+  state: () => ({}),
   getters: {},
   actions: {
     // 退出登录

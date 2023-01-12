@@ -61,7 +61,7 @@ class PureHttp {
           return config
         }
         config.headers['Content-Type'] = 'application/json;charset=utf-8'
-        let token = localStorage.getItem('token')
+        const token = localStorage.getItem('token')
         if (token != null && token != '') {
           config.headers['token'] = token // 设置请求头
         } else {
@@ -120,7 +120,7 @@ class PureHttp {
     const instance = PureHttp.axiosInstance
     instance.interceptors.response.use(
       (response: PureHttpResponse) => {
-        let res = response.data
+        const res = response.data
 
         // 当员工状态异常时，直接退出登录
         if (res.code === 10000) {
